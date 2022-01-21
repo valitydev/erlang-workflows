@@ -118,7 +118,7 @@ jobs:
             ${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-      
 
       - name: Run dialyzer
-        run: rebar3 dialyzer
+        run: rebar3 as test dialyzer
 
   test:
     name: Test
