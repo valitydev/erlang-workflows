@@ -159,9 +159,11 @@ jobs:
         id: run-ct-w-compose
         if: ${{ inputs.run-ct-with-compose == true }}
         env:
+          # Pass workflow params to use in docker-compose.yml
           DEV_IMAGE_TAG: ${{ inputs.service-name }}-dev
           OTP_VERSION: ${{ inputs.otp-version }}
           THRIFT_VERSION: ${{ inputs.thrift-version }}
+          # Enable buildkit extensions in docker compose
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
         run: |
