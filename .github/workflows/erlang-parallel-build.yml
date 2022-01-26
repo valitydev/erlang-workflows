@@ -50,6 +50,12 @@ on:
         required: false
         default: false
         type: boolean
+      # Workflow env
+      cache-version:
+        description: 'Cache version. Only change this if you *need* to reset build caches.'
+        required: false
+        default: "v1"
+        type: string
 
 jobs:
   build:
@@ -82,9 +88,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: _build/*/lib
-          key: ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Compile
         run: |
@@ -109,9 +115,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: _build/*/lib
-          key: ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Check formatting
         run: rebar3 fmt -c
@@ -140,17 +146,17 @@ jobs:
         uses: actions/cache@v2
         with:
           path: _build/*/lib
-          key: ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Cache PLTs
         uses: actions/cache@v2
         with:
           path: _build/test/rebar3_*_plt
-          key: ${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-${{ hashFiles('rebar.lock') }}
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-      
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-      
 
       - name: Run dialyzer
         run: rebar3 as test dialyzer
@@ -173,9 +179,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: _build/*/lib
-          key: ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Run EUnit
         run: rebar3 eunit --cover
