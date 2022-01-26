@@ -18,8 +18,8 @@ on:
         required: true
         type: string
       # Thrift options
-      use-thirft:
-        description: 'Whether or not to install the thirft compiler.'
+      use-thrift:
+        description: 'Whether or not to install the thrift compiler.'
         required: false
         default: false
         type: boolean
@@ -66,7 +66,7 @@ jobs:
           rebar3-version: ${{ inputs.rebar-version }}
 
       - name: Setup Thrift compiler
-        if: ${{ inputs.use-thirft }}
+        if: ${{ inputs.use-thrift }}
         uses: valitydev/action-setup-thrift@v0.0.5
         with:
           thrift-version: ${{ inputs.thrift-version }}
