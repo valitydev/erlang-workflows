@@ -3,11 +3,6 @@ name: Erlang Parallel Build
 on:
   workflow_call:
     inputs:
-      service-name:
-        description: 'Service name, as in docker-compose.yml (only required when running when run-ct-with-compose: true).'
-        required: false
-        default: ""
-        type: string
       # Beam env
       otp-version:
         description: 'Erlang/OTP version to use.'
@@ -50,6 +45,11 @@ on:
         required: false
         default: false
         type: boolean
+      run-ct-compose-container-name:
+        description: 'Service name, as in docker-compose.yml (default: testrunner).'
+        required: false
+        default: "testrunner"
+        type: string
       # Workflow env
       cache-version:
         description: 'Cache version. Only change this if you *need* to reset build caches.'
@@ -197,15 +197,14 @@ jobs:
         if: ${{ inputs.run-ct-with-compose == true }}
         env:
           # Pass workflow params to use in docker-compose.yml
-          DEV_IMAGE_TAG: ${{ inputs.service-name }}-dev
+          DEV_IMAGE_TAG: ${{ inputs.run-ct-compose-container-name }}-dev
           OTP_VERSION: ${{ inputs.otp-version }}
           THRIFT_VERSION: ${{ inputs.thrift-version }}
           # Enable buildkit extensions in docker compose
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
         run: |
-          [[ "${{ inputs.service-name }}" == "" ]] && exit 1
-          docker-compose run --use-aliases --rm ${{ inputs.service-name }} rebar3 ct --cover
+          docker-compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover
 
       - name: Store CT Logs
         if: ${{ failure() && (steps.run-ct.outcome == 'failure' || steps.run-ct-w-compose.outcome == 'failure') }}
