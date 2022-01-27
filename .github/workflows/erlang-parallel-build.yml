@@ -80,7 +80,7 @@ jobs:
       # NOTICE: This action is WIP
       - name: Setup Swagger Codegen
         if: ${{ inputs.use-swagger-codegen }}
-        uses: valitydev/action-setup-swagger-codegen@d08e870c37f680ba657762075d59257aeb3738f2
+        uses: valitydev/action-setup-swagger-codegen@a4920c1
         with:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
