@@ -37,7 +37,7 @@ on:
       erlang-generator-version:
         description: 'Erlang generator (valitydev/swagger-generator-erlang) version to use.'
         required: false
-        default: "1.0.0"
+        default: "1.0.1"
         type: string
       # Test env
       run-ct-with-compose:
