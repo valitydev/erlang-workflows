@@ -84,21 +84,13 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build/default
+      - name: Cache _build
         uses: actions/cache@v2
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-default-${{ hashFiles('rebar.lock') }}
+          path: _build/*/lib
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-default-
-
-      - name: Cache _build/test
-        uses: actions/cache@v2
-        with:
-          path: _build/test/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-test-${{ hashFiles('rebar.lock') }}
-          restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-test-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Compile
         run: |
@@ -119,13 +111,13 @@ jobs:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
 
-      - name: Cache _build/default
+      - name: Cache _build
         uses: actions/cache@v2
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-default-${{ hashFiles('rebar.lock') }}
+          path: _build/*/lib
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-default-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Check formatting
         run: rebar3 fmt -c
@@ -150,13 +142,13 @@ jobs:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
 
-      - name: Cache _build/test
+      - name: Cache _build
         uses: actions/cache@v2
         with:
-          path: _build/test/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-test-${{ hashFiles('rebar.lock') }}
+          path: _build/*/lib
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-test-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Cache PLTs
         uses: actions/cache@v2
@@ -183,13 +175,13 @@ jobs:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
 
-      - name: Cache _build/test
+      - name: Cache _build
         uses: actions/cache@v2
         with:
-          path: _build/test/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-test-${{ hashFiles('rebar.lock') }}
+          path: _build/*/lib
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-test-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Run EUnit
         run: rebar3 eunit --cover
