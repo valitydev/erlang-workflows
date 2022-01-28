@@ -77,10 +77,9 @@ jobs:
         with:
           thrift-version: ${{ inputs.thrift-version }}
 
-      # NOTICE: This action is WIP
       - name: Setup Swagger Codegen
         if: ${{ inputs.use-swagger-codegen }}
-        uses: valitydev/action-setup-swagger-codegen@0d53499816c42c7d5acd777f59fc73e304094b26
+        uses: valitydev/action-setup-swagger-codegen@0v0.0.1
         with:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
