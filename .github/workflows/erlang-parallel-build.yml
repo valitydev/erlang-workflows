@@ -111,6 +111,19 @@ jobs:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
 
+      - name: Setup Thrift compiler
+        if: ${{ inputs.use-thrift }}
+        uses: valitydev/action-setup-thrift@v0.0.5
+        with:
+          thrift-version: ${{ inputs.thrift-version }}
+
+      - name: Setup Swagger Codegen
+        if: ${{ inputs.use-swagger-codegen }}
+        uses: valitydev/action-setup-swagger-codegen@v0.0.1
+        with:
+          codegen-version: ${{ inputs.swagger-codegen-version }}
+          generator-version: ${{ inputs.erlang-generator-version }}
+
       - name: Cache _build
         uses: actions/cache@v2
         with:
@@ -141,6 +154,19 @@ jobs:
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
+
+      - name: Setup Thrift compiler
+        if: ${{ inputs.use-thrift }}
+        uses: valitydev/action-setup-thrift@v0.0.5
+        with:
+          thrift-version: ${{ inputs.thrift-version }}
+
+      - name: Setup Swagger Codegen
+        if: ${{ inputs.use-swagger-codegen }}
+        uses: valitydev/action-setup-swagger-codegen@v0.0.1
+        with:
+          codegen-version: ${{ inputs.swagger-codegen-version }}
+          generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
         uses: actions/cache@v2
@@ -174,6 +200,19 @@ jobs:
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
+
+      - name: Setup Thrift compiler
+        if: ${{ inputs.use-thrift }}
+        uses: valitydev/action-setup-thrift@v0.0.5
+        with:
+          thrift-version: ${{ inputs.thrift-version }}
+
+      - name: Setup Swagger Codegen
+        if: ${{ inputs.use-swagger-codegen }}
+        uses: valitydev/action-setup-swagger-codegen@v0.0.1
+        with:
+          codegen-version: ${{ inputs.swagger-codegen-version }}
+          generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
         uses: actions/cache@v2
