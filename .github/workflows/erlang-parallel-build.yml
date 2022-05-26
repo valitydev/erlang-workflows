@@ -93,9 +93,7 @@ jobs:
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Compile
-        run: |
-          rebar3 compile
-          rebar3 as test compile
+        run: rebar3 compile
 
   check:
     name: Check
