@@ -85,17 +85,15 @@ jobs:
           generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: _build/*/lib
+          path: _build/default/lib
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Compile
-        run: |
-          rebar3 compile
-          rebar3 as test compile
+        run: rebar3 compile
 
   check:
     name: Check
@@ -125,9 +123,9 @@ jobs:
           generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: _build/*/lib
+          path: _build/default/lib
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
@@ -169,15 +167,15 @@ jobs:
           generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: _build/*/lib
+          path: _build/default/lib
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Cache PLTs
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: _build/test/rebar3_*_plt
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-${{ hashFiles('rebar.lock') }}
@@ -215,9 +213,9 @@ jobs:
           generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: _build/*/lib
+          path: _build/default/lib
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
           restore-keys: |
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
