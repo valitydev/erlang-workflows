@@ -250,9 +250,17 @@ jobs:
           path: _build/test/logs
 
       - name: Run test coverage analysis
-        run: rebar3 covertool generate
+        run: |
+          rebar3 covertool generate
+          rebar3 codecov analyze --lcov true --json false
 
-      - name: Upload coverage statistics
+      - name: Upload coverage statistics (coveralls)
+        uses: coverallsapp/github-action@master
+        with:
+          path-to-lcov: ./lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload coverage statistics (codecov)
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
