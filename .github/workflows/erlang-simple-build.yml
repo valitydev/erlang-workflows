@@ -100,10 +100,32 @@ jobs:
           restore-keys: |
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-
 
+      - name: Check formatting (prereqs)
+        id: prereq-erlfmt
+        run: |
+          if ( rebar3 plugins list | grep 'erlfmt' ) ; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+            echo "::notice file=rebar.config::Plugin 'erlfmt' is missing, can not check formatting."
+          fi
+
       - name: Check formatting
+        if: ${{ steps.prereq-erlfmt.outputs.exists == "true" }}
         run: rebar3 fmt -c
 
+      - name: Run linting (prereqs)
+        id: prereq-lint
+        run: |
+          if ( rebar3 plugins list | grep 'rebar3_lint' ) ; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+            echo "::notice file=rebar.config::Plugin 'rebar3_lint' is missing, can not run linting."
+          fi
+
       - name: Run linting
+        if: ${{ steps.prereq-lint.outputs.exists == "true" }}
         run: rebar3 lint
 
       - name: Run xref
