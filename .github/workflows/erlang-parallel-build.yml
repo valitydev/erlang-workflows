@@ -21,7 +21,7 @@ on:
       thrift-version:
         description: 'Thrift (valitydev/thrift) version to use.'
         required: false
-        default: "0.14.2.1"
+        default: "0.14.2.3"
         type: string
       # Codegen options
       use-swagger-codegen:
