@@ -257,7 +257,7 @@ jobs:
       - name: Upload coverage statistics (coveralls)
         uses: coverallsapp/github-action@1.1.3
         with:
-          path-to-lcov: lcov.info
+          path-to-lcov: randomfile
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload coverage statistics (codecov)
