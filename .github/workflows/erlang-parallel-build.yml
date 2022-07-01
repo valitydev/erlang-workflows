@@ -50,6 +50,12 @@ on:
         required: false
         default: "testrunner"
         type: string
+      # Coverage env
+      use-coveralls:
+        description: 'Use coveralls for code coverage analysis.'
+        required: false
+        default: false
+        type: boolean
       # Workflow env
       cache-version:
         description: 'Cache version. Only change this if you *need* to reset build caches.'
@@ -249,19 +255,22 @@ jobs:
           name: ct-logs
           path: _build/test/logs
 
-      - name: Run test coverage analysis
-        run: |
-          rebar3 covertool generate
-          rebar3 lcov convert
+      - name: Run test coverage coversion (covertool)
+        run: rebar3 covertool generate
 
-      - name: Upload coverage statistics (coveralls)
-        uses: coverallsapp/github-action@1.1.3
-        with:
-          path-to-lcov: _build/test/lcov/lcov.info
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run test coverage coversion (lcov)
+        if: ${{ inputs.use-coveralls == true }}
+        run: rebar3 lcov covert
 
       - name: Upload coverage statistics (codecov)
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
           files: _build/test/covertool/*.covertool.xml
+
+      - name: Upload coverage statistics (coveralls)
+        if: ${{ inputs.use-coveralls == true }}
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          path-to-lcov: _build/test/lcov/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
