@@ -255,12 +255,12 @@ jobs:
           name: ct-logs
           path: _build/test/logs
 
-      - name: Run test coverage coversion (covertool)
+      - name: Run test coverage conversion (covertool)
         run: rebar3 covertool generate
 
-      - name: Run test coverage coversion (lcov)
+      - name: Run test coverage conversion (lcov)
         if: ${{ inputs.use-coveralls == true }}
-        run: rebar3 lcov covert
+        run: rebar3 lcov convert
 
       - name: Upload coverage statistics (codecov)
         uses: codecov/codecov-action@v2
