@@ -60,13 +60,13 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup BEAM
-        uses: erlef/setup-beam@v1.10
+        uses: erlef/setup-beam@v1.15
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
