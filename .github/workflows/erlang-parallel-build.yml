@@ -40,6 +40,11 @@ on:
         default: "1.0.1"
         type: string
       # Test env
+      docker-version:
+        description: 'Docker version to use.'
+        required: false
+        default: ""
+        type: string
       run-ct-with-compose:
         description: 'Run tests in a docker-compose environment, requires a docker-compose.yml file (see `valitydev/erlang-templates` for examples).'
         required: false
@@ -204,9 +209,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup Docker
+        if: ${{ inputs.docker-version != 0 && inputs.docker-version != NaN }}
       - uses: docker-practice/actions-setup-docker@master
         with:
-          docker_version: "20.10.21"
+          docker_version: ${{ inputs.docker-version }}
 
       - name: Setup BEAM
         uses: erlef/setup-beam@v1.15
