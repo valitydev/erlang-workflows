@@ -43,7 +43,6 @@ on:
       docker-version:
         description: 'Docker version to use.'
         required: false
-        default: ""
         type: string
       run-ct-with-compose:
         description: 'Run tests in a docker-compose environment, requires a docker-compose.yml file (see `valitydev/erlang-templates` for examples).'
