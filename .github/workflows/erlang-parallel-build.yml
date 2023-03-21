@@ -210,7 +210,7 @@ jobs:
 
       - name: Setup Docker
         if: ${{ inputs.docker-version != 0 && inputs.docker-version != NaN }}
-      - uses: docker-practice/actions-setup-docker@master
+        uses: docker-practice/actions-setup-docker@master
         with:
           docker_version: ${{ inputs.docker-version }}
 
