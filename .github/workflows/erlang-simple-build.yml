@@ -79,7 +79,7 @@ jobs:
 
       - name: Setup Swagger Codegen
         if: ${{ inputs.use-swagger-codegen }}
-        uses: valitydev/action-setup-swagger-codegen@v0.0.1
+        uses: valitydev/action-setup-swagger-codegen@v0.0.4
         with:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
