@@ -155,7 +155,7 @@ jobs:
         run: rebar3 covertool generate
 
       - name: Upload coverage statistics (coveralls)
-        if: ${{ inputs.upload-coverage == true && inputs.use-coveralls == true }}
+        if: ${{ inputs.upload-coverage == true }}
         uses: coverallsapp/github-action@v2.2.3
         with:
           path-to-lcov: _build/test/lcov/lcov.info

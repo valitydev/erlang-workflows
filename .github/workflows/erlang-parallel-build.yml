@@ -56,11 +56,6 @@ on:
         required: false
         default: true
         type: boolean
-      use-coveralls:
-        description: 'Use coveralls for code coverage analysis.'
-        required: false
-        default: false
-        type: boolean
       # Workflow env
       cache-version:
         description: 'Cache version. Only change this if you *need* to reset build caches.'
@@ -260,16 +255,12 @@ jobs:
           name: ct-logs
           path: _build/test/logs
 
-      - name: Run test coverage conversion (covertool)
-        if: ${{ inputs.upload-coverage == true }}
-        run: rebar3 covertool generate
-
       - name: Run test coverage conversion (lcov)
-        if: ${{ inputs.upload-coverage == true && inputs.use-coveralls == true }}
+        if: ${{ inputs.upload-coverage == true }}
         run: rebar3 lcov convert
 
       - name: Upload coverage statistics (coveralls)
-        if: ${{ inputs.upload-coverage == true && inputs.use-coveralls == true }}
+        if: ${{ inputs.upload-coverage == true }}
         uses: coverallsapp/github-action@v2.2.3
         with:
           path-to-lcov: _build/test/lcov/lcov.info
