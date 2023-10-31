@@ -154,9 +154,9 @@ jobs:
         if: ${{ inputs.run-eunit == true || inputs.run-common-test == true }}
         run: rebar3 covertool generate
 
-      - name: Upload coverage statistics
-        if: ${{ inputs.run-eunit == true || inputs.run-common-test == true }}
-        uses: codecov/codecov-action@v3
+      - name: Upload coverage statistics (coveralls)
+        if: ${{ inputs.upload-coverage == true && inputs.use-coveralls == true }}
+        uses: coverallsapp/github-action@v2.2.3
         with:
-          fail_ci_if_error: true
-          files: _build/test/covertool/*.covertool.xml
+          path-to-lcov: _build/test/lcov/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
