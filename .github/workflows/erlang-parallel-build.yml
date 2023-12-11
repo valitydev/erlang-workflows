@@ -272,7 +272,7 @@ jobs:
         if: ${{ inputs.upload-coverage == true }}
         uses: codecov/codecov-action@v3
         with:
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           files: _build/test/covertool/*.covertool.xml
 
       - name: Upload coverage statistics (coveralls)
