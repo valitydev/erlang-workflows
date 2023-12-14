@@ -255,7 +255,7 @@ jobs:
 
       - name: Store CT Logs
         if: ${{ failure() && (steps.run-ct.outcome == 'failure' || steps.run-ct-w-compose.outcome == 'failure') }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ct-logs
           path: _build/test/logs
