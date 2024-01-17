@@ -85,7 +85,7 @@ jobs:
           generator-version: ${{ inputs.erlang-generator-version }}
 
       - name: Cache _build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: _build/default/lib
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
@@ -93,7 +93,7 @@ jobs:
             ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
 
       - name: Cache PLTs
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: _build/test/rebar3_*_plt
           key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-plt-${{ hashFiles('rebar.lock') }}
