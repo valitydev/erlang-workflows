@@ -84,7 +84,7 @@ jobs:
 
       - name: Setup Thrift compiler
         if: ${{ inputs.use-thrift }}
-        uses: valitydev/action-setup-thrift@v1.0.1
+        uses: valitydev/action-setup-thrift@v1.0.3
         with:
           thrift-version: ${{ inputs.thrift-version }}
 
@@ -122,7 +122,7 @@ jobs:
 
       - name: Setup Thrift compiler
         if: ${{ inputs.use-thrift }}
-        uses: valitydev/action-setup-thrift@v1.0.1
+        uses: valitydev/action-setup-thrift@v1.0.3
         with:
           thrift-version: ${{ inputs.thrift-version }}
 
@@ -166,7 +166,7 @@ jobs:
 
       - name: Setup Thrift compiler
         if: ${{ inputs.use-thrift }}
-        uses: valitydev/action-setup-thrift@v1.0.1
+        uses: valitydev/action-setup-thrift@v1.0.3
         with:
           thrift-version: ${{ inputs.thrift-version }}
 
@@ -212,7 +212,7 @@ jobs:
 
       - name: Setup Thrift compiler
         if: ${{ inputs.use-thrift }}
-        uses: valitydev/action-setup-thrift@v1.0.1
+        uses: valitydev/action-setup-thrift@v1.0.3
         with:
           thrift-version: ${{ inputs.thrift-version }}
 
