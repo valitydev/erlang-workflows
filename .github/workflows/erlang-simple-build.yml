@@ -156,7 +156,7 @@ jobs:
 
       - name: Upload coverage statistics
         if: ${{ inputs.run-eunit == true || inputs.run-common-test == true }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           files: _build/test/covertool/*.covertool.xml
