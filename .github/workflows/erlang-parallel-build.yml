@@ -45,6 +45,12 @@ on:
         required: false
         default: false
         type: boolean
+      # Additional optional CT command line arguments
+      ct-command-args:
+        description: 'Additional command line arguments for common-test start command, see `rebar3 ct`. Defaults to empty string (default: ).'
+        required: false
+        default: ""
+        type: string
       run-ct-compose-container-name:
         description: 'Service name, as in docker-compose.yml (default: testrunner).'
         required: false
@@ -237,7 +243,7 @@ jobs:
       - name: Run CommonTest
         id: run-ct
         if: ${{ inputs.run-ct-with-compose == false }}
-        run: rebar3 ct --cover
+        run: rebar3 ct --cover ${{ inputs.ct-command-args }}
 
       - name: Run CommonTest (/w docker-compose)
         id: run-ct-w-compose
@@ -251,7 +257,7 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
         run: |
-          docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover
+          docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
 
       - name: Store CT Logs
         if: ${{ failure() && (steps.run-ct.outcome == 'failure' || steps.run-ct-w-compose.outcome == 'failure') }}
