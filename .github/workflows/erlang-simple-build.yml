@@ -50,6 +50,12 @@ on:
         required: false
         default: true
         type: boolean
+      # Additional optional CT command line arguments
+      ct-command-args:
+        description: 'Additional command line arguments for common-test start command, see `rebar3 ct`. Defaults to empty string (default: ).'
+        required: false
+        default: ""
+        type: string
       # Workflow env
       cache-version:
         description: 'Cache version. Only change this if you *need* to reset build caches.'
@@ -141,7 +147,7 @@ jobs:
       - name: Run CommonTest
         if: ${{ inputs.run-common-test == true }}
         id: run-ct
-        run: rebar3 ct --cover
+        run: rebar3 ct --cover ${{ inputs.ct-command-args }}
 
       - name: Store CT Logs
         if: ${{ failure() && steps.run-ct.outcome == 'failure' }}
