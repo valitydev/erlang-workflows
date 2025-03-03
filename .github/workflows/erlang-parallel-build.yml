@@ -283,7 +283,7 @@ jobs:
 
       - name: Upload coverage statistics (coveralls)
         if: ${{ inputs.upload-coverage == true && inputs.use-coveralls == true }}
-        uses: coverallsapp/github-action@1.1.3
+        uses: coverallsapp/github-action@v2.3.6
         with:
           path-to-lcov: _build/test/lcov/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
