@@ -245,6 +245,13 @@ jobs:
         if: ${{ inputs.run-ct-with-compose == false }}
         run: rebar3 ct --cover ${{ inputs.ct-command-args }}
 
+      - name: Set USER_UID and USER_GID env
+        id: ct-env-w-compose
+        if: ${{ inputs.run-ct-with-compose == true }}
+        run: |
+          echo "USER_UID=$(id -u)" >> $GITHUB_ENV
+          echo "USER_GID=$(id -g)" >> $GITHUB_ENV
+
       - name: Run CommonTest (/w docker-compose)
         id: run-ct-w-compose
         if: ${{ inputs.run-ct-with-compose == true }}
