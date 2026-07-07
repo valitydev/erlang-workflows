@@ -249,8 +249,8 @@ jobs:
         id: ct-env-w-compose
         if: ${{ inputs.run-ct-with-compose == true }}
         run: |
-          echo "RUNNER_UID=$(id -u)" >> $GITHUB_ENV
-          echo "RUNNER_GID=$(id -g)" >> $GITHUB_ENV
+          echo "USER_UID=$(id -u)" >> $GITHUB_ENV
+          echo "USER_GID=$(id -g)" >> $GITHUB_ENV
 
       - name: Run CommonTest (/w docker-compose)
         id: run-ct-w-compose
@@ -260,13 +260,12 @@ jobs:
           DEV_IMAGE_TAG: ${{ inputs.run-ct-compose-container-name }}-dev
           OTP_VERSION: ${{ inputs.otp-version }}
           THRIFT_VERSION: ${{ inputs.thrift-version }}
-          USER_UID: ${{ env.RUNNER_UID }}
-          USER_GID: ${{ env.RUNNER_GID }}
           # Enable buildkit extensions in docker compose
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
         run: |
-          docker compose run --user "${{ env.RUNNER_UID }}:${{ env.RUNNER_GID }}" --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
+          docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} /bin/bash -c 'id -u; id -g'
+          docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
 
       - name: Store CT Logs
         if: ${{ failure() && (steps.run-ct.outcome == 'failure' || steps.run-ct-w-compose.outcome == 'failure') }}
