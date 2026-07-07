@@ -101,13 +101,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Compile
         run: rebar3 compile
@@ -139,13 +141,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Check formatting
         run: rebar3 fmt -c
@@ -183,13 +187,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Cache PLTs
         uses: actions/cache@v3
@@ -229,13 +235,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Run EUnit
         run: rebar3 eunit --cover
@@ -264,7 +272,6 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
         run: |
-          docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} /bin/bash -c 'id -u; id -g'
           docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
 
       - name: Store CT Logs
