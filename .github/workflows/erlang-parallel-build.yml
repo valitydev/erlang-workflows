@@ -101,13 +101,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Compile
         run: rebar3 compile
@@ -139,13 +141,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Check formatting
         run: rebar3 fmt -c
@@ -183,13 +187,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Cache PLTs
         uses: actions/cache@v3
@@ -229,13 +235,15 @@ jobs:
           codegen-version: ${{ inputs.swagger-codegen-version }}
           generator-version: ${{ inputs.erlang-generator-version }}
 
-      - name: Cache _build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build/default/lib
-          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-${{ hashFiles('rebar.lock') }}
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-${{ hashFiles('rebar.lock') }}
           restore-keys: |
-            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-build-
+            ${{ inputs.cache-version }}-${{ runner.os }}-otp-${{ inputs.otp-version }}-rebar3-
 
       - name: Run EUnit
         run: rebar3 eunit --cover
@@ -244,6 +252,13 @@ jobs:
         id: run-ct
         if: ${{ inputs.run-ct-with-compose == false }}
         run: rebar3 ct --cover ${{ inputs.ct-command-args }}
+
+      - name: Set USER_UID and USER_GID env
+        id: ct-env-w-compose
+        if: ${{ inputs.run-ct-with-compose == true }}
+        run: |
+          echo "USER_UID=$(id -u)" >> $GITHUB_ENV
+          echo "USER_GID=$(id -g)" >> $GITHUB_ENV
 
       - name: Run CommonTest (/w docker-compose)
         id: run-ct-w-compose
@@ -257,7 +272,7 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
         run: |
-          docker compose run --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
+          docker compose run -e REBAR_CACHE_DIR=/.cache -v ~/.cache:/.cache --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
 
       - name: Store CT Logs
         if: ${{ failure() && (steps.run-ct.outcome == 'failure' || steps.run-ct-w-compose.outcome == 'failure') }}
