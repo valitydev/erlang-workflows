@@ -271,7 +271,6 @@ jobs:
           # Enable buildkit extensions in docker compose
           COMPOSE_DOCKER_CLI_BUILD: true
           DOCKER_BUILDKIT: true
-          BUILDKIT_PROGRESS: plain
         run: |
           docker compose run -e REBAR_CACHE_DIR=/.cache -v ~/.cache:/.cache --use-aliases --rm ${{ inputs.run-ct-compose-container-name }} rebar3 ct --cover ${{ inputs.ct-command-args }}
 
