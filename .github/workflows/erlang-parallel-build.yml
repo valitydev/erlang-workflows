@@ -83,7 +83,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup BEAM
-        uses: erlef/setup-beam@v1.18.2
+        uses: erlef/setup-beam@v1.24.1
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
@@ -123,7 +123,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup BEAM
-        uses: erlef/setup-beam@v1.18.2
+        uses: erlef/setup-beam@v1.24.1
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
@@ -169,7 +169,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup BEAM
-        uses: erlef/setup-beam@v1.18.2
+        uses: erlef/setup-beam@v1.24.1
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
@@ -217,7 +217,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup BEAM
-        uses: erlef/setup-beam@v1.18.2
+        uses: erlef/setup-beam@v1.24.1
         with:
           otp-version: ${{ inputs.otp-version }}
           rebar3-version: ${{ inputs.rebar-version }}
